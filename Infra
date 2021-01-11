@@ -1,1 +1,31 @@
+yum update
 
+0. JDK 1.8 설치
+ - yum install java-1.8.0-openjdk
+ - yum install java-1.8.0-openjdk-devel
+ 
+1. MySQL 설치
+ - yuum install wget
+ - wget http://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm
+ - rpm -ivh mysql80-community-release-el7-3.noarch.rpm
+ - yum -y install mysql-community-server
+ 
+2. Docker 설치
+ - yum install -y yum-utils device-mapper-persistent-data lvm2
+ - yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+ - yum install docker-ce
+ 
+3. Git 설치
+ - yum install http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-1.noarch.rpm
+ - yum install git
+ 
+4. Tomcat 설치
+ - wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.27/bin/apache-tomcat-8.5.27.tar.gz
+ - tar zxvf apache-tomcat-8.5.27.tar.gz
+ - mv apache-tomcat-8.5.27 /usr/local/tomcat8
+
+5. Gitlab Runner 설치
+ - curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
+ - sudo apt install gitlab-runner
+ - apt-cache madison gitlab-runner
+ - sudo apt install gitlab-runner=10.0.0
