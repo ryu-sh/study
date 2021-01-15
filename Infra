@@ -17,6 +17,7 @@ yum update
 2. Docker 설치
  - yum install -y yum-utils device-mapper-persistent-data lvm2
  - docker.repos 복붙 (to-do 해결 필요)
+ - subscription-manager repos --enable=rhel-7-server-extras-rpms
  - yum install -y http://mirror.centos.org/centos/7/extras/x86_64/Packages/container-selinux-2.119.2-1.911c772.el7_8.noarch.rpm
  - yum install docker-ce
  
