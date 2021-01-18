@@ -5,6 +5,11 @@ OS방화벽 설정
  - sudo firewall-cmd --permanent --add-port=80/tcp (특정 포트 해제)
  - systemctl stop firewalld (OS 방화벽 내림)
 
+apache 설치
+ - yum install -y httpd
+ - systemctl start httpd
+ 
+
 
 0. JDK 1.8 설치
  - yum install java-1.8.0-openjdk
