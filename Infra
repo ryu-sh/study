@@ -1,5 +1,10 @@
 yum update
 
+OS방화벽 설정
+ - sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address=10.131.146.47 port port="8806" protocol="tcp" accept' (특정IP, Port 해제)
+ - sudo firewall-cmd --permanent --add-port=80/tcp (특정 포트 해제)
+
+
 0. JDK 1.8 설치
  - yum install java-1.8.0-openjdk
  - yum install java-1.8.0-openjdk-devel
@@ -19,6 +24,7 @@ yum update
  - yum install policycoreutils-python
  - semanage port -l | grep mysqld_port_t (포트 확인)
  - semanage port -a -t mysqld_port_t -p tcp 8806 (포트 추가) 이후 재시작
+ - GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY '비밀번호';
  
 2. Docker 설치
  - yum install -y yum-utils device-mapper-persistent-data lvm2
