@@ -3,6 +3,7 @@ yum update
 OS방화벽 설정
  - sudo firewall-cmd --permanent --add-rich-rule='rule family="ipv4" source address=10.131.146.47 port port="8806" protocol="tcp" accept' (특정IP, Port 해제)
  - sudo firewall-cmd --permanent --add-port=80/tcp (특정 포트 해제)
+ - systemctl stop firewalld (OS 방화벽 내림)
 
 
 0. JDK 1.8 설치
