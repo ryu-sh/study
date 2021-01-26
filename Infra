@@ -56,3 +56,6 @@ apache tomcat 연동
  - sudo apt install gitlab-runner
  - apt-cache madison gitlab-runner
  - sudo apt install gitlab-runner=10.0.0
+
+6. docker 로그 관리
+https://lemontia.tistory.com/908
