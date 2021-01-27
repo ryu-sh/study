@@ -59,3 +59,9 @@ apache tomcat 연동
 
 6. docker 로그 관리
 https://lemontia.tistory.com/908
+
+
+급하니까 사이트만(나중 정리 필요)
+https://java7.tistory.com/94 (mod_jk)
+https://idchowto.com/?p=53319 (세션클러스터링)
+http://hansworld.co.kr/Instant_Backup/836 (톰캣 관련 경로)
