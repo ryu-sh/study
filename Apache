@@ -1,5 +1,22 @@
 1. mod_jk 활용 apache - tomcat 연동
  - https://www.lesstif.com/system-admin/apache-httpd-tomcat-connector-mod_jk-reverse-proxy-mod_proxy-12943367.html
+ - wget http://ftp.daum.net/apache//tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.37-src.tar.gz (mod_jk Down)
+ - tar zxvf tomcat-connectors-1.2.37-src.tar.gz
+ - cd tomcat-connectors-1.2.37-src/native
+ - ./configure --with-apxs=/usr/sbin/apxs (apxs 설치 안되어있을 경우 yum install httpd-devel, apxs경로 확인 필수)
+ - make & make install
+ - vi /etc/httpd/conf/httpd.conf (아래 내용 추가)
+  ```xml
+  LoadModule jk_module modules/mod_jk.so
+  ```
+ - vi vi workers_jk.properties
+ ```xml
+  worker.list=worker1
+
+  worker.worker1.type=ajp13
+  worker.worker1.host=10.131.64.178
+  worker.worker1.port=8090
+  ```
 
 2. reverse proxy
  - 
