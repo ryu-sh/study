@@ -61,6 +61,10 @@ apache tomcat 연동
 6. docker 로그 관리
 https://lemontia.tistory.com/908
 
+7. nodejs 설치
+- curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
+- yum install -y nodejs
+
 
 급하니까 사이트만(나중 정리 필요)
 https://java7.tistory.com/94 (mod_jk)
