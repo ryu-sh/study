@@ -29,12 +29,12 @@ apache tomcat 연동
  - SET GLOBAL validate_password.policy=LOW; (혹시 비밀번호 정책 어쩌고 나오면 초기 비번 + A 하고 변경 후 정책 low 변경)
  - alter user 'root'@'localhost' identified by '변경 비밀번호'; (다시 원래 비밀번호 적용)
  - 포트 변경
- - vi /etc/my.cnf -> port=8806 수정 후 systemctl restart mysqld
- - 만약 에러날 경우 SELIUX 설정 문제
+ - vi /etc/my.cnf -> port=8806, bind-address=0.0.0.0 수정 후 systemctl restart mysqld
+ - DB접근 권한 부여 CREATE USER 'root'@'%' IDENTIFIED BY 'abcd$1234'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+ - 만약 port 에러날 경우 SELIUX 설정 문제
  - yum install policycoreutils-python
  - semanage port -l | grep mysqld_port_t (포트 확인)
  - semanage port -a -t mysqld_port_t -p tcp 8806 (포트 추가) 이후 재시작
- - GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY '비밀번호';
  
 2. Docker 설치
  - yum install -y yum-utils device-mapper-persistent-data lvm2
