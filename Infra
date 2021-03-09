@@ -23,6 +23,7 @@ apache tomcat 연동
  - wget http://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm
  - rpm -ivh mysql80-community-release-el7-3.noarch.rpm
  - yum -y install mysql-community-server
+ - systemctl start mysqld (/var/log/mysqld.log 파일이 비어있을경우)
  - sudo grep 'temporary password' /var/log/mysqld.log (초기 비밀번호 확인)
  - alter user 'root'@'localhost' identified by '변경 비밀번호';
  - SET GLOBAL validate_password.policy=LOW; (혹시 비밀번호 정책 어쩌고 나오면 초기 비번 + A 하고 변경 후 정책 low 변경)
