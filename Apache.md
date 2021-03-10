@@ -69,8 +69,6 @@
  Include conf/extra/httpd-vhosts.conf
  LoadModule proxy_module modules/mod_proxy.so
  LoadModule proxy_http_module modules/mod_proxy_http.so
- ...
- Include conf/extra/httpd-vhosts.conf
  ```
  - vi /etc/httpd/conf/extra/httpd-vhosts.conf (https redirect는 안된다. 에러남)
  ```
