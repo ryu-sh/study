@@ -23,6 +23,7 @@ apache tomcat 연동
  - wget http://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm
  - rpm -ivh mysql80-community-release-el7-3.noarch.rpm
  - yum -y install mysql-community-server
+ - 실행 전 lower_case_table_names = 1 my.cnf 파일 수정 필요
  - systemctl start mysqld (/var/log/mysqld.log 파일이 비어있을경우)
  - sudo grep 'temporary password' /var/log/mysqld.log (초기 비밀번호 확인)
  - alter user 'root'@'localhost' identified by '변경 비밀번호';
