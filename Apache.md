@@ -169,3 +169,8 @@ session.setAttribute(“a”,”a”);
 </html>
 ```
 - route add -net 224.0.0.0 netmask 240.0.0.0 dev eth0(인터페이스명) (멀티캐스팅 라우팅 추가 부분, netstat -nr 해서 224.0.0.0 없을경우)
+
+
+
+
+tomcat port 설정 참고 사이트 : https://fruitdev.tistory.com/23
