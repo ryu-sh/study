@@ -30,7 +30,8 @@ apache tomcat 연동
  - alter user 'root'@'localhost' identified by '변경 비밀번호'; (다시 원래 비밀번호 적용)
  - 포트 변경
  - vi /etc/my.cnf -> port=8806, bind-address=0.0.0.0 수정 후 systemctl restart mysqld
- - DB접근 권한 부여 CREATE USER 'root'@'%' IDENTIFIED BY 'abcd$1234'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+ - DB접근 권한 부여 
+ - SET GLOBAL validate_password.mixed_case_count = 0; CREATE USER 'root'@'%' IDENTIFIED BY 'abcd$1234'; GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;
  - 만약 port 에러날 경우 SELIUX 설정 문제
  - yum install policycoreutils-python
  - semanage port -l | grep mysqld_port_t (포트 확인)
