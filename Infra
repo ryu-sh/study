@@ -53,6 +53,7 @@ apache tomcat 연동
  - wget http://archive.apache.org/dist/tomcat/tomcat-8/v8.5.27/bin/apache-tomcat-8.5.27.tar.gz
  - tar zxvf apache-tomcat-8.5.27.tar.gz
  - mv apache-tomcat-8.5.27 /usr/local/tomcat8
+ - tomcat 여러개 설정 : https://fruitdev.tistory.com/23
 
 5. Gitlab Runner 설치
  - curl -L https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh | sudo bash
