@@ -44,6 +44,12 @@ apache tomcat 연동
  - subscription-manager repos --enable=rhel-7-server-extras-rpms
  - yum install -y http://mirror.centos.org/centos/7/extras/x86_64/Packages/container-selinux-2.119.2-1.911c772.el7_8.noarch.rpm
  - yum install docker-ce
+2.1. Docker-compose 설치
+- curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# 바이너리 실행 권한 부여
+chmod +x /usr/local/bin/docker-compose
+# docker-compose 설치되었는지 확인
+docker-compose --version
  
 3. Git 설치
  - yum install http://opensource.wandisco.com/centos/7/git/x86_64/wandisco-git-release-7-1.noarch.rpm
