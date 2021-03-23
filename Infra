@@ -65,6 +65,8 @@ apache tomcat 연동
  - subscription-manager repos --enable=rhel-7-server-extras-rpms
  - yum install -y http://mirror.centos.org/centos/7/extras/x86_64/Packages/container-selinux-2.119.2-1.911c772.el7_8.noarch.rpm
  - yum install docker-ce
+ - systemctl enable docker (재부팅해도 재실행 되도록)
+ 
 2.1. Docker-compose 설치
 - curl -L "https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 # 바이너리 실행 권한 부여
@@ -94,6 +96,11 @@ https://lemontia.tistory.com/908
 7. nodejs 설치
 - curl -sL https://rpm.nodesource.com/setup_12.x | sudo bash -
 - yum install -y nodejs
+
+8. tomcat service 등록 관련
+https://opensrc.tistory.com/200 (tomcat service 등록)
+systemctl enable /usr/lib/systemd/system/tomcat.service
+chown -R ldccblock:ldccblock /usr/local/tomcat8
 
 
 급하니까 사이트만(나중 정리 필요)
