@@ -6,6 +6,12 @@ OS방화벽 설정
  - systemctl stop firewalld (OS 방화벽 내림)
  - systemctl disable firewalld
  - systemctl mask firewalld (서버 재시작 후에도 사용 x)
+ 
+user 생성 및 sudo 권한
+- adduser ldccblock
+- passwd ldccblock
+- visudo -f /etc/sudoers
+  - ldccblock    ALL=(ALL)       NOPASSWD: ALL 수정
 
 apache 설치
  - yum install -y httpd
@@ -14,9 +20,8 @@ apache 설치
 apache tomcat 연동
  - https://www.lesstif.com/system-admin/apache-httpd-tomcat-connector-mod_jk-reverse-proxy-mod_proxy-12943367.html
 
-0. JDK 1.8 설치
- - yum install java-1.8.0-openjdk
- - yum install java-1.8.0-openjdk-devel
+0. JDK 11 설치
+ - sudo yum install -y java-11-openjdk-devel.x86_64
  
 1. MySQL 설치
  - yuum install wget
@@ -37,6 +42,22 @@ apache tomcat 연동
  - yum install policycoreutils-python
  - semanage port -l | grep mysqld_port_t (포트 확인)
  - semanage port -a -t mysqld_port_t -p tcp 8806 (포트 추가) 이후 재시작
+ 
+ 1.1 MariaDb
+  - repo 설정 (https://zetawiki.com/wiki/CentOS7_MariaDB_%EC%84%A4%EC%B9%98)
+  - systemctl start mariadb
+  - /usr/bin/mysqladmin -u root password 'abcd$1234'
+  - sudo vi /etc/my.cnf.d/server.cnf
+  - port=8806
+    bind-address=0.0.0.0
+    lower_case_table_names=1
+  - GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY 'abcd$1234';
+  - FLUSH PRIVILEGES;
+  - CREATE USER 'ldccblock'@'%' IDENTIFIED BY 'ldccblock#2626';
+    CREATE USER 'ldccblock'@'localhost' IDENTIFIED BY 'ldccblock#2626';
+  - GRANT ALL PRIVILEGES ON chamomile.* TO 'ldccblock'@'%';
+    GRANT ALL PRIVILEGES ON chamomile.* TO 'ldccblock'@'localhost';
+  - FLUSH PRIVILEGES;
  
 2. Docker 설치
  - yum install -y yum-utils device-mapper-persistent-data lvm2
