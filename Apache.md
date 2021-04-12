@@ -1,9 +1,9 @@
 0. 포트는 4000~4100, 45564 (설정 세팅 포트), 기타 서비스 포트 해제 필요
 1. mod_jk 활용 apache - tomcat 연동
  - https://www.lesstif.com/system-admin/apache-httpd-tomcat-connector-mod_jk-reverse-proxy-mod_proxy-12943367.html (참고사이트)
- - wget http://ftp.daum.net/apache//tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.37-src.tar.gz (mod_jk Down)
- - tar zxvf tomcat-connectors-1.2.37-src.tar.gz
- - cd tomcat-connectors-1.2.37-src/native
+ - wget http://ftp.daum.net/apache//tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.48-src.tar.gz (mod_jk Down)
+ - tar zxvf tomcat-connectors-1.2.48-src.tar.gz
+ - cd tomcat-connectors-1.2.48-src/native
  - ./configure --with-apxs=/usr/sbin/apxs (apxs 설치 안되어있을 경우 yum install httpd-devel, apxs경로 확인 필수)
  - make & make install
  - vi /etc/httpd/conf/httpd.conf (아래 내용 추가)
