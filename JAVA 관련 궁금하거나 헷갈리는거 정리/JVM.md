@@ -1,2 +1,1 @@
-
-https://jeongjin984.github.io/posts/JVM/
+https://github.com/whiteship/live-study/issues/1
