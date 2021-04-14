@@ -132,5 +132,9 @@ System.out.println(value);
 
 ![](https://s3.ap-northeast-2.amazonaws.com/yaboong-blog-static-resources/java/java-memory-management_heap-7.png)
 
+함수가 닫는 중괄호 } 에 도달하여 종료되면 print() 함수의 지역변수는 모두 stack 에서 pop 되어 사라진다. 이때, List 는 Object 타입이므로 지역변수가 모두 stack 에서 pop 되더라도 heap 영역에 그대로 존재한다. 즉, 함수호출시 레퍼런스 값을 복사하여 가지고 있던 listParam 과 함수내부의 지역변수인 value 만 스택에서 사라지고 나머지는 모두 그대로인 상태로 함수호출이 종료된다.
 
+![](https://s3.ap-northeast-2.amazonaws.com/yaboong-blog-static-resources/java/java-memory-management_heap-8.png)
+
+Object 타입의 데이터, 즉 heap 영역에 있는 데이터는 함수 내부에서 파라미터로 copied value 를 받아서 변경하더라도 함수호출이 종료된 시점에 변경내역이 반영되는 것을 볼 수 있다.
 
