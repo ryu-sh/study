@@ -5,3 +5,5 @@
 얼마나 쓸지는 모르겠지만 정리를 해보겠음
 
 운영체제 : https://jr-kelly.tistory.com/80?category=758909
+
+자바 스터디 : https://github.com/whiteship/live-study
