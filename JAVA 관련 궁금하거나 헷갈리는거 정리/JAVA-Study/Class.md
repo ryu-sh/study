@@ -40,3 +40,8 @@ static이나 public같은 키워드를 제어자(modifier)라고 하며, 클래�
 - transient - 변수 또는 메서드가 포함된 객체를 직렬화할 때 해당 내용은 무시된다.
 - synchronized - 메서드는 한 번에 하나의 쓰레드에 의해서만 접근 가능하다.
 - volatile - 해당 변수의 조작에 CPU 캐시가 쓰이지 않고 항상 메인 메모리로부터 읽힌다.
+
+### 상속
+https://yadon079.github.io/2020/java%20study%20halle/week-06#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%EB%A9%94%EC%84%9C%EB%93%9C-%EB%94%94%EC%8A%A4%ED%8C%A8%EC%B9%98-dynamic-method-dispatch
+https://jeeneee.dev/java-live-study/week6-inheritance/
+https://blog.naver.com/swoh1227/222181505425
