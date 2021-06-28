@@ -20,7 +20,7 @@
      
      인스턴스 변수 초기화: 기본값 → 명시적 초기화 → 인스턴스 초기화 블록 → 생성자
 
-#접근제어자, 그외
+## 접근제어자, 그외
 
 static이나 public같은 키워드를 제어자(modifier)라고 하며, 클래스나 멤버 선언 시 부가적인 의미를 부여한다.
 
@@ -41,7 +41,83 @@ static이나 public같은 키워드를 제어자(modifier)라고 하며, 클래�
 - synchronized - 메서드는 한 번에 하나의 쓰레드에 의해서만 접근 가능하다.
 - volatile - 해당 변수의 조작에 CPU 캐시가 쓰이지 않고 항상 메인 메모리로부터 읽힌다.
 
-### 상속
-https://yadon079.github.io/2020/java%20study%20halle/week-06#%EB%8B%A4%EC%9D%B4%EB%82%98%EB%AF%B9-%EB%A9%94%EC%84%9C%EB%93%9C-%EB%94%94%EC%8A%A4%ED%8C%A8%EC%B9%98-dynamic-method-dispatch
-https://jeeneee.dev/java-live-study/week6-inheritance/
-https://blog.naver.com/swoh1227/222181505425
+## 메서드 오버라이딩
+- 조상클래스로부터 상속받은 메서드의 내용을 변경하는 것을 오버라이딩이라고 한다. 상속받은 메서드를 그대로 사용하기도 하지만, 자손 클래스 자신에 맞게 변경해야하는 경우가 많다. 이럴 때 조상의 메서드를 오버라이딩한다.
+- 접근 제어자는 조상 클래스의 메서드보다 좁은 범위로 변경할 수 없다.
+   - 만일 조상 클래스에 정의된 메서드의 접근 제어자가 protected라면, 이를 오버라이딩하는 자손 클래스의 메서드는 접근 제어자가 protected나 public이어야 한다. 대부분의 경우 같은 범위의 접근 제어자를 사용한다.
+- 조상 클래스의 메서드보다 많은 수의 예외를 선언할 수 없다.
+
+- 오버로딩(overloading) 기존에 없는 새로운 메서드를 정의하는 것(new)
+- 오버라이딩(overriding) 상속받은 메서드의 내용을 변경하는 것(change, modify)
+
+```java
+class Parent {
+        void parentMethod() { }
+    }
+
+class Child extends Parent {
+  void parentMethod() { }         // 오버라이딩
+  void parentMethod(int i) { }    // 오버로딩
+
+  void childMethod() { }
+  void childMethod(int i) { }     // 오버로딩
+}
+```
+
+## 메소드 디스패치 (Dynamic Method Dispatch)
+ - 메소드 디스패치(method dispatch)는 어떤 메소드를 호출할지 결정하여 실행시키는 과정을 말한다. 이 과정은 static(정적)과 dynamic(동적)이 있다.
+1. static method dispatch
+ - 컴파일 시점에서, 컴파일러가 특정 메소드를 호출할 것이라고 명확하게 알고있는 경우이다.
+```java
+class Dispatch {
+        static class Service {
+            void run() {
+                System.out.println("run");
+            }
+
+            void run(String msg) {
+                System.out.println(msg);
+            }
+        }
+
+        public static void main(String[] args) {
+            new Service().run();
+        }
+    }
+```
+2. dynamic method dispatch
+ - 정적 디스패치와 반대로 컴파일러가 어떤 메소드를 호출하는지 모르는 경우이다. 동적 디스패치는 호출할 메서드를 런타임 시점에서 결정한다.(MyService1 일지, MyService2일지 컴파일 시점에는 모름)
+```java
+ class Dispatch {
+        static abstract class Service {
+            abstract void run();
+        }
+
+        static class MyService1 extends Service {
+            @Override
+            void run() {
+                System.out.println("1");
+            }
+        }
+
+        static class MyService2 extends Service {
+            @Override
+            void run() {
+                System.out.println("2");
+            }
+        }
+
+        public static void main(String[] args) {
+            Service srv = new MyService1();
+            srv.run();
+        }
+    }
+```
+
+## 추상클래스와 인터페이스 차이점
+- 추상클래스의 목적은 상속을 받아서 기능을 확장시키는 것(부모의 유전자를 물려받는다.)
+- 인터페이스의 목적은 구현하는 모든 클래스에 대해 특정한 메서드가 반드시 존재하도록 강제하는 역할 (구현한 객체들에 대해서 동일한 동작을 약속하기 위해 존재)
+
+## final
+- final은 ‘마지막의’ 또는 ‘변경될 수 없는’의 의미를 가지고 있으며 거의 모든 대상에 사용될 수 있다.
+- 변수에 사용되면 값을 변경할 수 없는 상수가 되며, 메서드에 사용되면 오버라이딩을 할 수 없게 되고 클래스에 사용되면 자신을 확장하는 자손클래스를 정의하지 못하게 된다.
