@@ -11,7 +11,8 @@
  - $JAVA_HOME/bin 으로 이동
  - ./rmiregistry (port)&
 3. policy 파일 만들기
-```cat jstatd.all.policy 
+```
+cat jstatd.all.policy 
 grant codebase "file:${java.home}/../lib/tools.jar"{
         permission java.security.AllPermission;
 };
