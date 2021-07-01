@@ -54,3 +54,41 @@ if (dir == Direction.WEST) {
 	// compareTo()는 가능
 }
 ```
+ - switch문의 조건식에도 열거형을 사용할 수 있다.
+ - switch 문에 열거형을 사용할 때 주의할 점은 case문에 열거형 타입의 이름은 적지 않고 상수의 이름만 적어야 한다는 제약이 있다. ('case Direction.EAST' 가 아닌 'case EAST' 만 적어야 한다.)
+
+## 내부 구현 모습
+
+```
+enum Direction { EAST, SOUTH, WEST, NORTH }
+```
+- 위의 열거형 상수 하나하나(EAST, SOUTH, WEST, NORTH)는 Direction의 객체이다.
+- 클래스로 구현한다면 아래와 같은 모습이 된다.
+```java
+public class Direction {
+    static final Direction EAST = new Direction("EAST");
+    static final Direction SOUTH = new Direction("SOUTH");
+    static final Direction WEST = new Direction("WEST");
+    static final Direction NORTH = new Direction("NORTH");
+
+    private String name;
+
+    private Direction(String name) {
+        this.name = name;
+    }
+}
+```
+- Direction 클래스의 static 상수 EAST, SOUTH, WEST, NORTH의 값은 객체의 주소고, 이 값은 바뀌지 않는 정적(static) 값이므로 '=='으로 비교가 가능한 것
+
+## 메소드
+- values() : 열거형의 모든 상수를 배열에 담아 반환한다.
+```
+  Direction[] arr = Direction.values(); 
+```
+- valueOf(String name) : 열거형 상수의 이름으로 문자열 상수에 대한 참조를 얻을 수 있게 해준다.
+```
+Direction d = Direction.valueOf("WEST");
+Direction.WEST == Direction.valueOf("WEST"); // true 반환
+```
+- String name() : 열거형 선언에 선언된대로 정확하게 열거형 상수의 이름을 문자열로 반환한다. 
+- int ordinal() : 열거형 상수가 정의된 순서를 반환한다.(0부터 시작)
