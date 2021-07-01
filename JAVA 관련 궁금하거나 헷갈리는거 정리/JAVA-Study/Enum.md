@@ -19,3 +19,38 @@
   - 문자열은 이를 표현할 수 없지만, Enum은 이를 표현할 수 있습니다.
   - 이로인해 실행되는 코드를 이해하기 위해 추가로 무언가를 찾아보는 행위를 최소화 할 수 있습니다.
 
+## 정의하는 방법
+- 아래와 같이 '{}' 안에 상수의 이름을 나열하기만 하면 된다.
+```
+enum 열거형 이름 { 상수명1, 상수명2, ... 상수명n }
+```
+- 열거형에 정의된 상수를 사용하는 방법은 '열거형이름.상수명' 이다. 마치 클래스의 static변수를 참조하는것과 같다.
+- 열거형 상수는 필드를 가질 수 있다. 필드를 추가하는 방법은 추가하고 싶은 필드를 정의하고 생성자의 인자로 추가한 뒤 각각의 상수에 값을 입력하면 된다.
+```java
+enum Direction {
+    EAST(1), SOUTH(5), WEST(-1), NORTH(10);
+
+    pricvate int value;
+    Direction (int value) {
+        this.value = value; 
+    }
+
+    public int getValue() { return value; }
+}
+```
+- 열거형의 생성자는 접근제어자가 묵시적으로 private이기 때문에 외부에서는 열거형의 생성자를 호출할 수 없다.
+
+## 비교
+ - 열거형 상수간의 비교에는 '=='을 사용할 수 있다.
+ -  '<', '>'와 같은 비교연산자는 사용할 수 없고 compareTo()는 사용가능
+```java
+Direction dir;
+
+if (dir == Direction.WEST) {
+	...
+} else if (dir > Direction.WEST) {
+	// 에러. 열거형 상수에 비교연산자는 사용 불가능
+} else if (dir.compareTo(Direction.WEST) > 0) {
+	// compareTo()는 가능
+}
+```
