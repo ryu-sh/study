@@ -1,0 +1,3 @@
+#CQRS
+- CQRS는 Command Query Responsibility Segregation의 약자로 상태를 변경하는 명령(Command)을 위한 모델과 상태를 제공하는 조회(Query)를 위한 모델을 분리하는 패턴
+- ...
