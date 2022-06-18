@@ -37,10 +37,80 @@
 3. 서비스 저하에서 원활하게 회복하는 시나리오. 폴백있는 회로차단기
 - 계속 실패한 호출을 빠르게 실패시키고 대체 코드 폴백을 사용하여 다른곳의 데이터를 조회하게 만들수 있다. 
 - 서비스 C 호출을 막는동안 서비스 C는 복구할 여유가 생기며 성능 저하를 회복하고, 회로차단기가 다시 간헐적으로 호출을 시도해 성공하면 회로차단기를 재설정하게 된다.
-## 히스트릭스 시작
 ## 스프링 클라우드와 히스트릭스를 위한 라이선싱 서버 설정
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-hystrix</artifactId>
+</dependency>
+```
+Main Class에 @EnableCircuitBreaker 어노테이셔 추가
+
 ## 히스트릭스를 사용한 회로 차단기 구현
+- 스프링 클라우드와 히스트릭스 애너테이션을 사용해 회로차단기 패턴으로 원격호출을 감싼다.
+- 라이선싱 및 조직 서비스 모두 자기 데이터베이스에 대한 호출을 히스트릭스 회로 차단기에 연결
+- 두 서비스 사이의 호출을 히스트릭스에 연결
+
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F6uAYY%2FbtqF0SoHDHK%2FFGttnTK861oUkeuSuI2Qh1%2Fimg.png)
+
+@HystrixCommand 애너테이션을 사용해 히스트릭스 회로차단기가 관리하는 자바 클래스 메서드라고 표시한다.
+스프링 프레임워크가 메서드를 감싸는 프록시를 동적으로 생성하고 원격 호출을 처리하기 위해 확보한
+스레드가 있는 스레드 풀로 해당 메서드에 대한 모든 호출을 관리한다.
+
+```java
+@HystrixCommand(
+  commandProperties={ @HystrixProperty(
+  name="execution.isolation.thread.timeoutInMilliseconds", value="12000")
+  })
+public List<License> getLicensesByOrg(String organizationId){
+  randomlyRunLong();
+  return licenseRepository.findByOrganizationId(organizationId);
+}
+```
+
 ## 폴백 프로세싱
+- 회로차단기가 호출울 중단하거나 호출이 실패할 경우 폴백전략을 구현
+- 중간자를 두어 서비스 실패를 가로채 다른대안을 선택할 기회를 줄 수 있다.
+- 실행 폴백메서드는 애너테이션으로 보호하려는 메서드와 동일 클래스에 있어야 한다.
+
+```java
+@HystrixCommand(fallbackMethod = "buildFallbackLicenseList") //호출이 실패할때 불러오는 클래스함수를 정의
+  public List<License> getLicensesByOrg(String organizationId){
+    randomlyRunLong();
+    return licenseRepository.findByOrganizationId(organizationId);
+  }
+private List<License> buildFallbackLicenseList(String organizationId){ 
+  List<License> fallbackList = new ArrayList<>();
+  License license = new License()
+    .withId("0000000-00-00000")
+    .withOrganizationId( organizationId )
+    .withProductName("Sorry no licensing information currently available");
+  fallbackList.add(license);
+  return fallbackList;
+}
+```
+
 ## 벌크헤드 패턴 구현
+- 서비스 내 개별 스레드풀을 사용해 서비스 호출을 격리하고, 호출되는 원격자원간에 벌크헤드 구축.
+- 벌크헤드 패턴은 원격 자원 호출을 자신의 스레드 풀에 격리하기 때문에 컨테이너의 비정상 종료를 방지한다.
+- 호출량이 많은 서비스가 히스트릭스의 기본 스레드 풀의 모든 스레드를 차지하게 되므로 문제가 생길수 있다. 
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F2t76Q%2FbtqF16fj6im%2FKmvNpWVoNEhfPQa2Jmj5uK%2Fimg.png)
+
+- maxQueueSize 속성에 대해 주의할것
+-  값을 -1로 설정하면 유입된 호출을 유지하는데 SynchronousQueue 동기식 큐가 사용되고, 가용 스레드 수보다 더 많은 요청을 처리할수 있다. 1보다 큰 값으로 설정하면  LinkedBlockingQueue 사용해 더 많은 요청을 큐에 넣을수 있다.
+- 스레드 풀이 처음 초기화될 때만 설정할 수 있음.
+- 스레드 풀의 적정크기는? 
+  - (서비스가 정상일때 최고점에서 초당 요청 수 x 99 백분위 수 지연 시간(초)) + 오버헤드를 대비한 소량의 추가 스레드
+```java
+@HystrixCommand(fallbackMethod = "buildFallbackLicenseList",
+             threadPoolKey = "licenseByOrgThreadPool", //스레드풀 고유이름 설정
+             threadPoolProperties = { // 스레드풀 동작을 정의하고 설정
+                 @HystrixProperty(name = "coreSize",value="30"), //스레드 개수 정의
+                 @HystrixProperty(name="maxQueueSize", value="10")}) //스레드풀 앞에 배치할 큐와 큐에 넣을 요청수 정의
+public List<License> getLicensesByOrg(String organizationId){ 
+  return licenseRepository.findByOrganizationId(organizationId);
+}
+```
+
 ## 히스트릭스 세부 설정
 ## 스레드 컨텍스트와 히스트릭스
